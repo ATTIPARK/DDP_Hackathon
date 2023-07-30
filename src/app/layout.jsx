@@ -4,6 +4,10 @@ import { createContext, useState } from "react";
 import "./globals.css";
 
 import { Inter } from "next/font/google";
+import { usePathname } from "next/navigation";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,14 +21,20 @@ export const AppContext = createContext();
 export default function RootLayout({ children }) {
   const [account, setAccount] = useState("");
 
+  const pathname = usePathname();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen flex justify-center items-center">
-          <div className="w-[390px] h-[844px] bg-white rounded-3xl border-neutral-800 border-4">
+        <div className="min-h-screen flex justify-center items-center bg-red-300">
+          <div className="w-[390px] h-[844px] bg-white rounded-3xl border-neutral-800 border-4 relative scrollbar-hide overflow-y-scroll overflow-x-hidden">
+            <Header />
             <AppContext.Provider value={{ account, setAccount }}>
               {children}
             </AppContext.Provider>
+            {/* {pathname !== "/" &&
+              pathname !== "/login" &&
+              pathname !== "/register" && <Footer />} */}
           </div>
         </div>
       </body>
